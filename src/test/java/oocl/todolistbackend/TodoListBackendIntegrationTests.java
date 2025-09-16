@@ -152,6 +152,15 @@ public class TodoListBackendIntegrationTests {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    void should_response_404_when_delete_given_invalid_id() throws Exception {
+        TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
+        TodoItem returnedTodo = todoService.create(newTodo1);
+
+        mockMvc.perform(delete("/todos/{id}", 999)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 
 
 

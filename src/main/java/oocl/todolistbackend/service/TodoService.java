@@ -40,7 +40,9 @@ public class TodoService {
     }
 
     public void delete(long id) {
-
+        if(!todoRepository.getTodoById(id)){
+            throw new TodoItemNotFoundException();
+        }
         todoRepository.remove(id);
     }
 }
