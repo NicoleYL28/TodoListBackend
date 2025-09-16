@@ -1,6 +1,5 @@
 package oocl.todolistbackend;
 
-import oocl.todolistbackend.dao.TodoJpaRepository;
 import oocl.todolistbackend.repository.TodoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,14 +44,21 @@ public class TodoListBackendIntegrationTests {
     }
 
     @Test
-    void should_return_id_when_insert_given_valid_todo_items_data() throws Exception {
+    void should_return_todo_item_when_insert_given_valid_todo_item_data() throws Exception {
         String requestBody = """
                 { "text": "newTodo"}
                 """;
 
         mockMvc.perform(post("/todo")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)).andExpect(status().isCreated()).andExpect(jsonPath("$.id").isNumber());
+                .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.text").value("newTodo"))
+                .andExpect(jsonPath("$.done").value(false));
     }
+//
+//    @Test
+//    void should_response_
 
 }

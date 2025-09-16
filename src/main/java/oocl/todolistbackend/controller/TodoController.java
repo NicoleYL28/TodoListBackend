@@ -17,8 +17,8 @@ public class TodoController {
     private TodoService todoService;
 
     @PostMapping("/todo")
-    public ResponseEntity<Map<String, Long>> addTodo(@RequestBody TodoItem todoItem) {
-        Map<String, Long> result = todoService.create(todoItem);
+    public ResponseEntity<TodoItem> addTodo(@RequestBody TodoItem todoItem) {
+        TodoItem result = todoService.create(todoItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 

@@ -14,9 +14,9 @@ public class TodoService {
     @Autowired
     private TodoRepository todoRepository;
 
-    public Map<String, Long> create(TodoItem todoItem) {
+    public TodoItem create(TodoItem todoItem) {
         todoRepository.insert(todoItem);
-        return Map.of("id", todoItem.getId());
+        return todoItem;
     }
 
 
