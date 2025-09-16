@@ -16,6 +16,11 @@ public class TodoController {
     @Autowired
     private TodoService todoService;
 
+    @PostMapping("/todo")
+    public ResponseEntity<Map<String, Long>> addTodo(@RequestBody TodoItem todoItem) {
+        Map<String, Long> result = todoService.create(todoItem);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+    }
 
     @GetMapping("/todos")
     public ResponseEntity<List<TodoItem>> getCompanies(){

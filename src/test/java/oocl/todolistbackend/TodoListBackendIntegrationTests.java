@@ -30,7 +30,6 @@ public class TodoListBackendIntegrationTests {
         todoRepository.clear();
     }
 
-
     @Test
     void should_return_todo_items_when_get_given_todo_items_data_in_db() throws Exception {
         TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
@@ -44,7 +43,17 @@ public class TodoListBackendIntegrationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
 
+    }
 
+    @Test
+    void should_return_id_when_insert_given_valid_todo_items_data() throws Exception {
+        String requestBody = """
+                { "text": "newTodo"}
+                """;
+
+        mockMvc.perform(post("/todo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody)).andExpect(status().isCreated()).andExpect(jsonPath("$.id").isNumber());
     }
 
 }
