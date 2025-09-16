@@ -128,6 +128,20 @@ public class TodoListBackendIntegrationTests {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    void should_response_422_when_update_given_empty_body() throws Exception {
+        TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
+        TodoItem returnedTodo = todoService.create(newTodo1);
+
+        String updateRequestBody = """
+                {}
+                """;
+        mockMvc.perform(put("/todos/{id}", returnedTodo.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateRequestBody))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
 
 
 

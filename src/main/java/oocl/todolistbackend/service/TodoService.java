@@ -32,7 +32,9 @@ public class TodoService {
         if(!todoRepository.getTodoById(id)){
             throw new TodoItemNotFoundException();
         }
-
+        if(updatedTodoItem.getText() == null || updatedTodoItem.getText().trim().isEmpty()){
+            throw new UpdateItemIsEmptyException();
+        }
         updatedTodoItem.setId(id);
         return todoRepository.update(updatedTodoItem);
     }

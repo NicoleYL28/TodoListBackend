@@ -1,4 +1,4 @@
 package oocl.todolistbackend.exceptions;
 
-public class InvalidRequestBodyException extends RuntimeException{
+public class InvalidRequestBodyException extends RuntimeException {
 }
