@@ -142,6 +142,15 @@ public class TodoListBackendIntegrationTests {
                 .andExpect(status().isUnprocessableEntity());
     }
 
+    @Test
+    void should_delete_todo_item_when_given_valid_todo_item_id() throws Exception {
+        TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
+        TodoItem returnedTodo = todoService.create(newTodo1);
+
+        mockMvc.perform(delete("/todos/{id}", returnedTodo.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+    }
 
 
 
