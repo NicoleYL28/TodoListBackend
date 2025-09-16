@@ -13,12 +13,16 @@ public class TodoRepository {
     @Autowired
     private TodoJpaRepository todoJpaRepository;
 
-    public void insert(TodoItem todoItem) {
-        todoJpaRepository.save(todoItem);
+    public TodoItem insert(TodoItem todoItem) {
+        return todoJpaRepository.save(todoItem);
     }
 
     public List<TodoItem> getTodos() {
         return todoJpaRepository.findAll();
+    }
+
+    public TodoItem update(TodoItem updatedTodoItem) {
+        return todoJpaRepository.save(updatedTodoItem);
     }
 
     public void clear() {

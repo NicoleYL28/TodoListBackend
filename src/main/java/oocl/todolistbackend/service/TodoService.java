@@ -18,12 +18,16 @@ public class TodoService {
         if(todoItem.getText().trim().isEmpty() || todoItem.getText() == null){
             throw new InvalidRequestBodyException();
         }
-        todoRepository.insert(todoItem);
-        return todoItem;
+        return todoRepository.insert(todoItem);
     }
 
 
     public List<TodoItem> getTodos() {
         return todoRepository.getTodos();
+    }
+
+    public TodoItem update(long id, TodoItem updatedTodoItem) {
+        updatedTodoItem.setId(id);
+        return todoRepository.update(updatedTodoItem);
     }
 }
