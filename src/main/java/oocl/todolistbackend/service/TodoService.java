@@ -15,7 +15,7 @@ public class TodoService {
     private TodoRepository todoRepository;
 
     public TodoItem create(TodoItem todoItem) {
-        if(todoItem.getText() == "" || todoItem.getText() == null){
+        if(todoItem.getText().trim().isEmpty() || todoItem.getText() == null){
             throw new InvalidRequestBodyException();
         }
         todoRepository.insert(todoItem);

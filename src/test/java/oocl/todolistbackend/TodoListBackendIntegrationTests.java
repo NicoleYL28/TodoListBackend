@@ -60,6 +60,22 @@ public class TodoListBackendIntegrationTests {
     }
 
     @Test
+    void should_return_todo_item_when_insert_given_customized_id() throws Exception {
+        String requestBody = """
+                { "id": 1234,
+                "text": "newTodo"}
+                """;
+
+        mockMvc.perform(post("/todo")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.text").value("newTodo"))
+                .andExpect(jsonPath("$.done").value(false));
+    }
+
+    @Test
     void should_response_422_when_insert_given_invalid_todo_item_data() throws Exception {
         String requestBody = """
                 { "done": false}
@@ -70,5 +86,19 @@ public class TodoListBackendIntegrationTests {
                         .content(requestBody))
                 .andExpect(status().isUnprocessableEntity());
     }
+
+//    @Test
+//    void should_response_422_when_insert_given_invalid_todo_item_data() throws Exception {
+//        String requestBody = """
+//                { "done": false}
+//                """;
+//
+//        mockMvc.perform(post("/todo")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(requestBody))
+//                .andExpect(status().isUnprocessableEntity());
+//    }
+
+
 
 }
