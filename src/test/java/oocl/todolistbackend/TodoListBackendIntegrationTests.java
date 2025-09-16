@@ -2,6 +2,7 @@ package oocl.todolistbackend;
 
 import oocl.todolistbackend.entity.TodoItem;
 import oocl.todolistbackend.repository.TodoRepository;
+import oocl.todolistbackend.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,6 +23,9 @@ public class TodoListBackendIntegrationTests {
 
     @Autowired
     private TodoRepository todoRepository;
+
+    @Autowired
+    private TodoService todoService;
 
     @BeforeEach
     public void setup(){
@@ -86,6 +89,48 @@ public class TodoListBackendIntegrationTests {
                         .content(requestBody))
                 .andExpect(status().isUnprocessableEntity());
     }
+
+    @Test
+    void should_return_item_when_update_given_valid_updated_todo_item_data() throws Exception {
+        TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
+        TodoItem returnedTodo = todoService.create(newTodo1);
+
+        String updateRequestBody = """
+                {
+                "text": "update todo",
+                "done": true
+                }
+                """;
+        mockMvc.perform(put("/todos/{id}", returnedTodo.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateRequestBody))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(returnedTodo.getId()))
+                .andExpect(jsonPath("$.text").value("update todo"))
+                .andExpect(jsonPath("$.done").value(true));
+
+    }
+
+    @Test
+    void should_response_404_when_update_given_invalid_id() throws Exception {
+        TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
+        TodoItem returnedTodo = todoService.create(newTodo1);
+
+        String updateRequestBody = """
+                {
+                "text": "update todo",
+                "done": true
+                }
+                """;
+        mockMvc.perform(put("/todos/{id}", 999)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(updateRequestBody))
+                .andExpect(status().isNotFound());
+    }
+
+
+
+
 
 
 

@@ -29,7 +29,11 @@ public class TodoService {
     }
 
     public TodoItem update(long id, TodoItem updatedTodoItem) {
+        if(!todoRepository.getTodoById(id)){
+            throw new TodoItemNotFoundException();
+        }
 
+        updatedTodoItem.setId(id);
         return todoRepository.update(updatedTodoItem);
     }
 
