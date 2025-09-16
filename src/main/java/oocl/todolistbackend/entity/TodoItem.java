@@ -1,4 +1,4 @@
-package oocl.todolistbackend;
+package oocl.todolistbackend.entity;
 
 
 import jakarta.persistence.*;

@@ -1,12 +1,12 @@
 package oocl.todolistbackend.service;
 
-import oocl.todolistbackend.TodoItem;
+import oocl.todolistbackend.entity.TodoItem;
+import oocl.todolistbackend.exceptions.InvalidRequestBodyException;
 import oocl.todolistbackend.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class TodoService {
@@ -15,6 +15,9 @@ public class TodoService {
     private TodoRepository todoRepository;
 
     public TodoItem create(TodoItem todoItem) {
+        if(todoItem.getText() == "" || todoItem.getText() == null){
+            throw new InvalidRequestBodyException();
+        }
         todoRepository.insert(todoItem);
         return todoItem;
     }

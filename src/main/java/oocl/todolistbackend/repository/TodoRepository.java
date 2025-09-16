@@ -1,6 +1,6 @@
 package oocl.todolistbackend.repository;
 
-import oocl.todolistbackend.TodoItem;
+import oocl.todolistbackend.entity.TodoItem;
 import oocl.todolistbackend.dao.TodoJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
