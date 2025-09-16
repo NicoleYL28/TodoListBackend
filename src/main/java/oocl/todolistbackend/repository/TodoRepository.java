@@ -28,4 +28,12 @@ public class TodoRepository {
     public void clear() {
         todoJpaRepository.deleteAll();
     }
+
+    public boolean getTodoById(long id) {
+        return todoJpaRepository.existsById(id);
+    }
+
+    public void remove(long id) {
+        todoJpaRepository.deleteById(id);
+    }
 }

@@ -2,6 +2,8 @@ package oocl.todolistbackend.service;
 
 import oocl.todolistbackend.entity.TodoItem;
 import oocl.todolistbackend.exceptions.InvalidRequestBodyException;
+import oocl.todolistbackend.exceptions.TodoItemNotFoundException;
+import oocl.todolistbackend.exceptions.UpdateItemIsEmptyException;
 import oocl.todolistbackend.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ public class TodoService {
     private TodoRepository todoRepository;
 
     public TodoItem create(TodoItem todoItem) {
-        if(todoItem.getText().trim().isEmpty() || todoItem.getText() == null){
+        if(todoItem.getText() == null || todoItem.getText().trim().isEmpty()){
             throw new InvalidRequestBodyException();
         }
         return todoRepository.insert(todoItem);
@@ -27,7 +29,8 @@ public class TodoService {
     }
 
     public TodoItem update(long id, TodoItem updatedTodoItem) {
-        updatedTodoItem.setId(id);
+
         return todoRepository.update(updatedTodoItem);
     }
+
 }

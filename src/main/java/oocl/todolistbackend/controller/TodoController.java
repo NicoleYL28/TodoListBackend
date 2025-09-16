@@ -32,9 +32,10 @@ public class TodoController {
     }
 
     @PutMapping("/todos/{id}")
-    public ResponseEntity<TodoItem> updateEmployee(@PathVariable long id, @RequestBody TodoItem updatedTodoItem) {
+    public ResponseEntity<TodoItem> updateTodo(@PathVariable long id, @RequestBody TodoItem updatedTodoItem) {
         TodoItem todoItem = todoService.update(id, updatedTodoItem);
         return ResponseEntity.status(HttpStatus.OK).body(todoItem);
     }
+
 
 }
