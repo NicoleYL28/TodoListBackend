@@ -23,7 +23,7 @@ public class TodoController {
         return ResponseEntity.status(HttpStatus.OK).body(todoService.getTodos());
     }
 
-    @PostMapping("/todo")
+    @PostMapping("/todos")
     public ResponseEntity<TodoItem> addTodo(@RequestBody TodoItemReq todoItemReq) {
         TodoItem todoItem = new TodoItem();
         BeanUtils.copyProperties(todoItemReq, todoItem);

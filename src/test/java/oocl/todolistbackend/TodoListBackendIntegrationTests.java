@@ -50,7 +50,7 @@ public class TodoListBackendIntegrationTests {
                 { "text": "newTodo"}
                 """;
 
-        mockMvc.perform(post("/todo")
+        mockMvc.perform(post("/todos")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isCreated())
@@ -66,7 +66,7 @@ public class TodoListBackendIntegrationTests {
                 "text": "newTodo"}
                 """;
 
-        mockMvc.perform(post("/todo")
+        mockMvc.perform(post("/todos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
@@ -81,23 +81,11 @@ public class TodoListBackendIntegrationTests {
                 { "done": false}
                 """;
 
-        mockMvc.perform(post("/todo")
+        mockMvc.perform(post("/todos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnprocessableEntity());
     }
-
-//    @Test
-//    void should_response_422_when_insert_given_invalid_todo_item_data() throws Exception {
-//        String requestBody = """
-//                { "done": false}
-//                """;
-//
-//        mockMvc.perform(post("/todo")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andExpect(status().isUnprocessableEntity());
-//    }
 
 
 
