@@ -1,5 +1,6 @@
 package oocl.todolistbackend.service;
 
+import ch.qos.logback.core.util.StringUtil;
 import oocl.todolistbackend.entity.TodoItem;
 import oocl.todolistbackend.exceptions.InvalidRequestBodyException;
 import oocl.todolistbackend.exceptions.TodoItemNotFoundException;
@@ -32,7 +33,7 @@ public class TodoService {
         if(!todoRepository.getTodoById(id)){
             throw new TodoItemNotFoundException();
         }
-        if(updatedTodoItem.getText() == null || updatedTodoItem.getText().trim().isEmpty()){
+        if(updatedTodoItem.getDone() == null || StringUtil.isNullOrEmpty(updatedTodoItem.getText())){
             throw new UpdateItemIsEmptyException();
         }
         updatedTodoItem.setId(id);

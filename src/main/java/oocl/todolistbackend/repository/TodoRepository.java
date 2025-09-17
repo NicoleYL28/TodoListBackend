@@ -7,33 +7,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public class TodoRepository {
 
-    @Autowired
-    private TodoJpaRepository todoJpaRepository;
+public interface TodoRepository {
 
-    public TodoItem insert(TodoItem todoItem) {
-        return todoJpaRepository.save(todoItem);
-    }
+    public TodoItem insert(TodoItem todoItem);
 
-    public List<TodoItem> getTodos() {
-        return todoJpaRepository.findAll();
-    }
+    public List<TodoItem> getTodos();
 
-    public TodoItem update(TodoItem updatedTodoItem) {
-        return todoJpaRepository.save(updatedTodoItem);
-    }
+    public TodoItem update(TodoItem updatedTodoItem);
 
-    public void clear() {
-        todoJpaRepository.deleteAll();
-    }
+    public boolean getTodoById(long id);
 
-    public boolean getTodoById(long id) {
-        return todoJpaRepository.existsById(id);
-    }
-
-    public void remove(long id) {
-        todoJpaRepository.deleteById(id);
-    }
+    public void remove(long id);
 }

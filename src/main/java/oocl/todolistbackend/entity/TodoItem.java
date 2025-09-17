@@ -19,6 +19,6 @@ public class TodoItem {
     private long id;
     private String text;
     @Builder.Default
-    private boolean done = false;
+    private Boolean done = false;
 
 }

@@ -1,7 +1,9 @@
 package oocl.todolistbackend;
 
+import oocl.todolistbackend.dao.TodoJpaRepository;
 import oocl.todolistbackend.entity.TodoItem;
 import oocl.todolistbackend.repository.TodoRepository;
+import oocl.todolistbackend.repository.TodoRepositoryDBImpl;
 import oocl.todolistbackend.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,14 +24,17 @@ public class TodoListBackendIntegrationTests {
     private MockMvc mockMvc;
 
     @Autowired
-    private TodoRepository todoRepository;
+    private TodoRepositoryDBImpl todoRepositoryDB;
 
     @Autowired
     private TodoService todoService;
 
+    @Autowired
+    private TodoJpaRepository todoJpaRepository;
+
     @BeforeEach
     public void setup(){
-        todoRepository.clear();
+        todoJpaRepository.deleteAll();
     }
 
     @Test
@@ -37,8 +42,8 @@ public class TodoListBackendIntegrationTests {
         TodoItem newTodo1 = TodoItem.builder().text("todo 1").build();
         TodoItem newTodo2 = TodoItem.builder().text("todo 2").build();
 
-        todoRepository.insert(newTodo1);
-        todoRepository.insert(newTodo2);
+        todoRepositoryDB.insert(newTodo1);
+        todoRepositoryDB.insert(newTodo2);
 
         mockMvc.perform(get("/todos")
                         .contentType(MediaType.APPLICATION_JSON))
